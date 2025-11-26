@@ -11,6 +11,7 @@ services:
       - ./test-results:/app/test-results
       - ./playwright-report:/app/playwright-report
       - ./allure-results:/app/allure-results
+      - ./ctrf:/app/ctrf
     environment:
       - CI=true
     # Comando pode ser sobrescrito ao executar

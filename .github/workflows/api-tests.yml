@@ -31,7 +31,7 @@ jobs:
 
       - name: Create directories for test results
         run: |
-          mkdir -p test-results playwright-report allure-results
+          mkdir -p test-results playwright-report allure-results ctrf
 
       - name: Run API tests
         run: |
@@ -39,6 +39,7 @@ jobs:
             -v ${{ github.workspace }}/test-results:/app/test-results \
             -v ${{ github.workspace }}/playwright-report:/app/playwright-report \
             -v ${{ github.workspace }}/allure-results:/app/allure-results \
+            -v ${{ github.workspace }}/ctrf:/app/ctrf \
             dog-api-tests:latest
 
       - name: Upload test results
@@ -68,14 +69,14 @@ jobs:
           path: playwright-report/
           retention-days: 30
 
-      - name: Publish Test Summary
+      - name: Publish Test Report
         if: always()
-        uses: dorny/test-reporter@v1
+        uses: ctrf-io/github-test-reporter@v1
         with:
-          name: Playwright Test Results
-          path: test-results/junit.xml
-          reporter: java-junit
-          list-suites: all
-          list-tests: all
-          max-annotations: 50
-          fail-on-error: false
+          report-path: './ctrf/*.json'
+          summary-report: true
+          failed-report: true
+          test-report: true
+          pull-request: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

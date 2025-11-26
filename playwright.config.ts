@@ -19,6 +19,7 @@ const config: PlaywrightTestConfig = defineConfig({
         ['list'],
         ['json', { outputFile: 'test-results/results.json' }],
         ['junit', { outputFile: 'test-results/junit.xml' }],
+        ['playwright-ctrf-json-reporter', { outputFile: 'ctrf/ctrf-report.json' }],
         ['allure-playwright', { outputFolder: 'allure-results' }]
       ]
     : [
@@ -26,6 +27,7 @@ const config: PlaywrightTestConfig = defineConfig({
         ['list'],
         ['json', { outputFile: 'test-results/results.json' }],
         ['junit', { outputFile: 'test-results/junit.xml' }],
+        ['playwright-ctrf-json-reporter', { outputFile: 'ctrf/ctrf-report.json' }],
         ['allure-playwright', { outputFolder: 'allure-results' }]
       ],
   use: {
