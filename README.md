@@ -217,17 +217,65 @@ Os testes são executados automaticamente via **GitHub Actions** em:
 - ✅ Build otimizado com cache de Docker
 - ✅ Execução em ambiente isolado (Docker)
 - ✅ Geração automática de relatórios HTML
+- ✅ **Relatório visual no Job Summary** - Resumo interativo dos testes
+- ✅ **Comentários automáticos em Pull Requests** - Resumo dos testes nos PRs
 - ✅ Upload de artefatos para download:
   - `test-results` - Resultados completos
   - `test-results-json` - JSON dos resultados
   - `playwright-html-report` - Relatório HTML interativo
 - ✅ Retenção de artefatos por 30 dias
 
+### Relatório Visual no GitHub Actions
+
+O projeto utiliza o [GitHub Test Reporter](https://github.com/ctrf-io/github-test-reporter) para gerar relatórios visuais interativos diretamente no GitHub Actions.
+
+![Exemplo de Relatório](./docs/images/reports-example.png)
+
+#### O que você verá no Job Summary:
+
+1. **Resumo Executivo:**
+   - Total de testes executados
+   - Quantidade de testes que passaram
+   - Quantidade de testes que falharam
+   - Testes pulados (se houver)
+   - Testes flaky (se houver)
+   - Duração total da execução
+
+2. **Lista Detalhada de Testes:**
+   - Nome de cada teste executado
+   - Status individual (✅ Passou / ❌ Falhou)
+   - Duração de cada teste
+   - Identificação de testes flaky
+
+3. **Análise de Falhas:**
+   - Detalhes dos testes que falharam
+   - Informações sobre erros
+   - Facilita identificação rápida de problemas
+
+#### Comentários em Pull Requests:
+
+Quando os testes são executados em um Pull Request, um comentário automático é criado com:
+- Resumo dos resultados dos testes
+- Lista de testes falhados (se houver)
+- Relatório completo de todos os testes
+- Análise de testes flaky e insights
+
+Isso permite que revisores vejam imediatamente o status dos testes sem precisar acessar a aba "Actions".
+
 ### Visualizar Resultados
 
-1. Acesse a aba **"Actions"** no repositório GitHub
-2. Selecione o workflow **"Api Tests"**
-3. Baixe os artefatos para visualizar relatórios detalhados
+1. **No Job Summary:**
+   - Acesse a aba **"Actions"** no repositório GitHub
+   - Selecione o workflow **"Api Tests"**
+   - Role até a seção **"Summary"** para ver o relatório visual completo
+
+2. **Em Pull Requests:**
+   - O relatório aparece automaticamente como comentário no PR
+   - Atualiza automaticamente a cada execução do workflow
+
+3. **Artefatos para Download:**
+   - Baixe os artefatos na aba "Actions" para relatórios detalhados
+   - Inclui relatórios HTML, JSON e outros formatos
 
 ## 🧪 Estrutura de Testes
 
