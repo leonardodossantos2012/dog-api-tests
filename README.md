@@ -1,234 +1,291 @@
 # Dog API Tests
 
-Projeto de testes automatizados de API para a [Dog API](https://dog.ceo/dog-api/documentation/) utilizando Playwright e TypeScript.
+## 📋 Descrição
 
-## 📋 Sobre o Projeto
+Projeto de testes automatizados de API para a [Dog API](https://dog.ceo/dog-api/documentation/) utilizando Playwright e TypeScript. O projeto foi desenvolvido seguindo as melhores práticas de testes de API, com arquitetura baseada em Service Layer, fixtures customizadas e validações robustas.
 
-Este projeto foi desenvolvido como parte de um desafio técnico de QA, com o objetivo de garantir a qualidade da integração com a Dog API. A aplicação permite que os usuários visualizem imagens de diferentes raças de cães e aprendam sobre as raças disponíveis.
+## 🎯 Objetivo
 
-## 🏗️ Estrutura do Projeto
+Garantir a qualidade e confiabilidade da integração com a Dog API através de testes automatizados que validam:
+- Estrutura e schema das respostas
+- Status HTTP e headers
+- Dados retornados
+- Cenários positivos e negativos
+- Tratamento de erros
+
+## 📊 Endpoints Testados
+
+### 1. GET /breeds/list/all
+Lista todas as raças de cães disponíveis, incluindo sub-raças.
+
+**Cenários:**
+- ✅ Schema válido da resposta
+- ✅ Raças com sub-raças
+- ✅ Raças sem sub-raças
+- ✅ Raças conhecidas específicas
+- ✅ Erro 404 para endpoint inexistente
+- ✅ Erro para método HTTP incorreto
+
+### 2. GET /breeds/image/random
+Retorna uma URL de imagem aleatória de qualquer raça.
+
+**Cenários:**
+- ✅ Status HTTP 200
+- ✅ Schema válido
+- ✅ URL válida de imagem
+- ✅ Content-Type JSON
+- ✅ Aleatoriedade (múltiplas chamadas)
+- ✅ Erro para método HTTP incorreto
+- ✅ Erro 404 para endpoint inexistente
+
+### 3. GET /breed/{breed}/images/random
+Retorna uma URL de imagem aleatória de uma raça específica.
+
+**Cenários:**
+- ✅ Status HTTP 200 para raça válida
+- ✅ Schema válido
+- ✅ URL válida que pertence à raça
+- ✅ Múltiplas raças válidas
+- ✅ Erro 404 para raça inexistente
+- ✅ Erro para método HTTP incorreto
+
+## 🏗️ Arquitetura
+
+O projeto segue uma arquitetura organizada e escalável:
 
 ```
 dog-api-tests/
-├── api/                    # Cliente da API
-│   └── dog-api.client.ts   # Cliente encapsulado para interação com a API
-├── fixtures/               # Fixtures do Playwright
-│   └── api.fixture.ts      # Fixture customizada com API client
-├── tests/                  # Testes automatizados
-│   ├── breeds-list.test.ts      # Testes para GET /breeds/list/all
-│   ├── breed-images.test.ts     # Testes para GET /breed/{breed}/images
-│   └── random-image.test.ts     # Testes para GET /breeds/image/random
-├── types/                  # Definições de tipos TypeScript
-│   └── api.types.ts        # Tipos para respostas da API
-├── utils/                  # Utilitários e helpers
-│   ├── validators.ts       # Funções de validação
-│   └── test-helpers.ts     # Helpers para testes
-├── playwright.config.ts    # Configuração do Playwright
-├── tsconfig.json           # Configuração do TypeScript
-└── package.json           # Dependências do projeto
+├── tests/              # Arquivos de teste (.test.ts)
+├── services/           # API Clients (Service Layer)
+│   ├── list-all/      # Service para listar raças
+│   └── random-image/  # Service para imagens aleatórias
+├── fixtures/           # Fixtures customizadas do Playwright
+├── utils/              # Utilitários, validadores e constantes
+├── docs/               # Documentação do projeto
+└── .github/workflows/  # GitHub Actions workflows
 ```
 
-## 🚀 Configuração do Ambiente
+### Padrões Implementados
+
+- **Service Layer**: Encapsula chamadas à API em classes reutilizáveis
+- **Fixtures Customizadas**: Disponibiliza services nos testes via fixtures
+- **Validadores**: Funções reutilizáveis para validação de estruturas complexas
+- **Separação de Responsabilidades**: Services fazem chamadas, testes fazem validações
+
+## 📚 Documentação
+
+### Planejamento dos Testes
+
+Para entender a estratégia de testes, os cenários escolhidos e a justificativa técnica das decisões:
+
+📄 **[Plano de Testes](./docs/test-plan.MD)**
+
+Este documento detalha:
+- Os endpoints testados e cenários implementados
+- A escolha da tecnologia Playwright para testes de API
+- A arquitetura do projeto (Service Layer, Fixtures)
+- A estratégia de cobertura e validação
+
+### Observações do Projeto
+
+Para entender as decisões técnicas, adaptações implementadas e configurações:
+
+📄 **[Observações do Projeto](./docs/observations.MD)**
+
+Este documento aborda:
+- Decisões arquiteturais e suas justificativas
+- Estrutura de Services e métodos
+- Configuração de Base URL e constantes
+- Otimizações de cache (Docker e GitHub Actions)
+- Estratégias de validação
+
+### Boas Práticas
+
+Para conhecer as boas práticas implementadas e recomendações de desenvolvimento:
+
+📄 **[Boas Práticas](./docs/best-practices.MD)**
+
+Este documento detalha:
+- Estrutura de pastas e organização do projeto
+- Separação de responsabilidades entre Services e testes
+- Padrões para uso de expects e validações
+- Convenções de nomenclatura e organização de código
+- Diretrizes para manutenção e evolução do projeto
+
+### Como Executar o Projeto
+
+Para configurar e executar o projeto em sua máquina local:
+
+📄 **[Como Executar o Projeto](./docs/run-project.MD)**
+
+Este documento inclui:
+- Instruções de instalação para macOS, Linux e Windows
+- Configuração de pré-requisitos (Node.js, npm, Git)
+- Comandos para executar testes em diferentes modos
+- Troubleshooting e soluções para problemas comuns
+
+### Execução via Docker
+
+Para executar os testes em ambiente containerizado:
+
+📄 **[Execução via Docker](./docs/docker-run.MD)**
+
+Este documento inclui:
+- Como construir a imagem Docker
+- Como executar testes no Docker
+- Como usar docker-compose
+- Otimizações de cache
+- Troubleshooting
+
+## 🚀 Início Rápido
 
 ### Pré-requisitos
 
 - Node.js (versão 18 ou superior)
 - npm ou yarn
+- Git
 
 ### Instalação
 
-1. Clone o repositório:
 ```bash
+# Clone o repositório
 git clone <repository-url>
 cd dog-api-tests
-```
 
-2. Instale as dependências:
-```bash
+# Instale as dependências
 npm install
-```
 
-3. Instale os browsers do Playwright (se necessário):
-```bash
-npx playwright install
-```
-
-## 🧪 Executando os Testes
-
-### Executar todos os testes
-```bash
+# Execute os testes
 npm test
 ```
 
-### Executar testes com interface gráfica
-```bash
-npm run test:ui
-```
+### Comandos Disponíveis
 
-### Executar testes em modo debug
 ```bash
+# Executar todos os testes
+npm test
+
+# Executar testes em modo debug
 npm run test:debug
-```
 
-### Executar testes específicos
-```bash
-# Testes de lista de raças
-npx playwright test tests/breeds-list.test.ts
-
-# Testes de imagens de raça
-npx playwright test tests/breed-images.test.ts
-
-# Testes de imagem aleatória
-npx playwright test tests/random-image.test.ts
-```
-
-### Executar testes em modo headed (com browser visível)
-```bash
-npm run test:headed
-```
-
-## 📊 Relatórios
-
-### Relatório HTML do Playwright
-Após executar os testes, visualize o relatório HTML:
-```bash
+# Visualizar relatório HTML
 npm run test:report
+
+# Executar testes com Docker
+npm run test:docker
+
+# Limpar containers Docker
+npm run test:docker:clean
+
+# Lint do código
+npm run lint
+
+# Formatar código
+npm run format
 ```
 
-O relatório será aberto automaticamente no navegador, mostrando:
-- Resultados de cada teste (sucesso/falha)
-- Tempo de execução
-- Screenshots de falhas (quando aplicável)
-- Traces de requisições
-- Logs detalhados
+## 🐳 Docker
 
-### Relatório Allure
-Para gerar relatório Allure:
+O projeto inclui suporte completo para execução via Docker:
+
 ```bash
-npm run test:allure
+# Executar testes com Docker Compose
+npm run test:docker
+
+# Ou diretamente
+docker-compose up --build
 ```
 
-## 📝 Endpoints Testados
+**Vantagens:**
+- Ambiente isolado e consistente
+- Não requer instalação local dos browsers
+- Fácil integração com CI/CD
+- Cache otimizado para builds rápidos
 
-### 1. GET /breeds/list/all
-Retorna uma lista completa de todas as raças de cães disponíveis, incluindo sub-raças.
+Para mais detalhes, consulte a [documentação de Docker](./docs/docker-run.MD).
 
-**Testes implementados:**
-- ✅ Validação de status HTTP 200
-- ✅ Validação da estrutura de resposta
-- ✅ Verificação de presença de raças
-- ✅ Validação de raças conhecidas
-- ✅ Verificação de raças com sub-raças
-- ✅ Validação de consistência entre chamadas
-- ✅ Validação de tempo de resposta
+## 🔄 CI/CD - GitHub Actions
 
-### 2. GET /breed/{breed}/images
-Retorna uma lista de URLs de imagens para uma raça específica.
+Os testes são executados automaticamente via **GitHub Actions** em:
+- Push para branch `main`
+- Pull Requests para qualquer branch
+- Execução manual via `workflow_dispatch`
 
-**Testes implementados:**
-- ✅ Validação de status HTTP 200 para raças válidas
-- ✅ Validação da estrutura de resposta
-- ✅ Verificação de URLs válidas de imagens
-- ✅ Testes com múltiplas raças válidas
-- ✅ Tratamento de erros (404 para raças inexistentes)
-- ✅ Validação de URLs com domínio correto
-- ✅ Validação de tempo de resposta
-- ✅ Testes de casos negativos (raça vazia, caracteres especiais)
+### Recursos do GitHub Actions
 
-### 3. GET /breeds/image/random
-Retorna uma URL de imagem aleatória de um cão.
+- ✅ Execução automática de testes em cada push/PR
+- ✅ Build otimizado com cache de Docker
+- ✅ Execução em ambiente isolado (Docker)
+- ✅ Geração automática de relatórios HTML
+- ✅ Upload de artefatos para download:
+  - `test-results` - Resultados completos
+  - `test-results-json` - JSON dos resultados
+  - `playwright-html-report` - Relatório HTML interativo
+- ✅ Retenção de artefatos por 30 dias
 
-**Testes implementados:**
-- ✅ Validação de status HTTP 200
-- ✅ Validação da estrutura de resposta
-- ✅ Verificação de URL válida de imagem
-- ✅ Validação de aleatoriedade (imagens diferentes)
-- ✅ Validação de tempo de resposta
-- ✅ Testes de requisições simultâneas
-- ✅ Validação de formatos de imagem
+### Visualizar Resultados
 
-## 🎯 Boas Práticas Implementadas
+1. Acesse a aba **"Actions"** no repositório GitHub
+2. Selecione o workflow **"Api Tests"**
+3. Baixe os artefatos para visualizar relatórios detalhados
 
-### Arquitetura
-- **Separação de responsabilidades**: Cliente da API, validadores, helpers e testes em módulos separados
-- **Page Object Pattern**: Cliente da API encapsula todas as interações
-- **Fixtures customizadas**: API client disponível em todos os testes via fixture
-- **TypeScript**: Tipagem forte para maior segurança e autocompletar
+## 🧪 Estrutura de Testes
 
-### Qualidade de Código
-- **Validações robustas**: Funções de validação reutilizáveis
-- **Testes abrangentes**: Casos positivos e negativos
-- **Documentação**: Código documentado com JSDoc
-- **Linting e formatação**: ESLint e Prettier configurados
+### Exemplo de Teste
 
-### Testes
-- **Testes independentes**: Cada teste pode ser executado isoladamente
-- **Assertions claras**: Mensagens de erro descritivas
-- **Validação de performance**: Testes de tempo de resposta
-- **Casos de borda**: Testes para cenários de erro
-
-## 🔧 Configurações
-
-### Playwright Config
-O arquivo `playwright.config.ts` contém:
-- Base URL da API: `https://dog.ceo/api`
-- Configuração de retries em CI
-- Múltiplos reporters (HTML, JSON, Allure)
-- Traces e screenshots em caso de falha
-
-### TypeScript Config
-Configuração estrita do TypeScript para:
-- Detecção de erros em tempo de compilação
-- Melhor suporte de IDE
-- Type safety completo
-
-## 📈 Resultados dos Testes
-
-Após a execução, os resultados são salvos em:
-- `playwright-report/` - Relatório HTML interativo
-- `test-results/` - Screenshots, vídeos e traces
-- `allure-results/` - Dados para relatório Allure
-
-## 🐛 Troubleshooting
-
-### Erros comuns
-
-**Erro: "Cannot find module"**
-```bash
-npm install
+```typescript
+test('deve retornar schema válido da resposta', async ({ listAll }) => {
+  const response = await listAll.getAllBreeds();
+  expect(response.status()).toBe(200);
+  expect(response.ok()).toBeTruthy();
+  
+  const data = await listAll.parseBreedsListResponse(response);
+  expect(data.status).toBe('success');
+  expect(validateBreedsListResponse(data)).toBeTruthy();
+});
 ```
 
-**Erro: "Playwright browsers not installed"**
-```bash
-npx playwright install
-```
+### Padrões de Teste
 
-**Testes falhando por timeout**
-- Verifique sua conexão com a internet
-- A API pode estar temporariamente indisponível
+- ✅ Um teste por cenário
+- ✅ Validações explícitas (sem helpers que escondem expects)
+- ✅ Testes positivos e negativos
+- ✅ Uso de validadores para estruturas complexas
 
-## 📚 Documentação Adicional
+## 📦 Tecnologias
 
-- [Documentação da Dog API](https://dog.ceo/dog-api/documentation/)
-- [Documentação do Playwright](https://playwright.dev/)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- **Playwright** - Framework de testes (API Testing)
+- **TypeScript** - Type-safety e melhor DX
+- **Docker** - Containerização e CI/CD
+- **GitHub Actions** - Integração contínua
+- **Allure** - Relatórios avançados (opcional)
+
+## 📈 Resultados
+
+Após a execução dos testes, os seguintes diretórios são criados:
+
+- **`test-results/`** - Resultados JSON, screenshots (se houver falhas) e traces
+- **`playwright-report/`** - Relatório HTML interativo
+- **`allure-results/`** - Resultados do Allure (se configurado)
 
 ## 🤝 Contribuindo
 
 1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
+2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
+3. Commit suas mudanças (`git commit -m 'Adiciona nova feature'`)
+4. Push para a branch (`git push origin feature/nova-feature`)
 5. Abra um Pull Request
 
-## 📄 Licença
+## 📝 Licença
 
-Este projeto está sob a licença MIT.
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
 
-## 👤 Autor
+## 🔗 Links Úteis
 
-Desenvolvido como parte de um desafio técnico de QA.
+- [Dog API Documentation](https://dog.ceo/dog-api/documentation/)
+- [Playwright Documentation](https://playwright.dev/)
+- [TypeScript Documentation](https://www.typescriptlang.org/)
 
 ---
 
-**Nota**: Este projeto é apenas para fins de teste e demonstração. A Dog API é um serviço gratuito, então por favor use com moderação.
+Desenvolvido com ❤️ para garantir a qualidade da integração com a Dog API

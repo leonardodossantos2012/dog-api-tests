@@ -12,12 +12,20 @@ const config: PlaywrightTestConfig = defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: [
-    ['html', { outputFolder: 'playwright-report' }],
-    ['list'],
-    ['json', { outputFile: 'test-results/results.json' }],
-    ['allure-playwright', { outputFolder: 'allure-results' }]
-  ],
+  reporter: process.env.CI
+    ? [
+        ['github'],
+        ['html', { outputFolder: 'playwright-report' }],
+        ['list'],
+        ['json', { outputFile: 'test-results/results.json' }],
+        ['allure-playwright', { outputFolder: 'allure-results' }]
+      ]
+    : [
+        ['html', { outputFolder: 'playwright-report' }],
+        ['list'],
+        ['json', { outputFile: 'test-results/results.json' }],
+        ['allure-playwright', { outputFolder: 'allure-results' }]
+      ],
   use: {
     baseURL: API_BASE_URL,
     trace: 'on-first-retry',

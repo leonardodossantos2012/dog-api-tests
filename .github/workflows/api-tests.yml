@@ -67,3 +67,15 @@ jobs:
           name: playwright-html-report
           path: playwright-report/
           retention-days: 30
+
+      - name: Publish Test Summary
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Playwright Test Results
+          path: test-results/results.json
+          reporter: playwright-json
+          list-suites: all
+          list-tests: all
+          max-annotations: 50
+          fail-on-error: false
