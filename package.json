@@ -28,7 +28,7 @@
     "@typescript-eslint/parser": "^6.13.0",
     "allure-playwright": "^2.10.0",
     "eslint": "^8.54.0",
-    "playwright-ctrf-json-reporter": "^1.0.0",
+    "playwright-ctrf-json-reporter": "^0.0.26",
     "prettier": "^3.1.0",
     "typescript": "^5.3.2"
   }
